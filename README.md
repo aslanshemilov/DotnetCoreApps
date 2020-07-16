@@ -231,9 +231,16 @@ A logging provider displays or stores logs to a particular medium such as a cons
 
 The following table lists important logging providers. 
 
+| Logging Provider's NuGet Package   |  Output Target  |
+|---|---|
+| [`Microsoft.Extensions.Logging.Console`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/) | Console |
+| [`Microsoft.Extensions.Logging.AzureAppServices`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/) | Azure App Services 'Diagnostics logs' and 'Log stream' features |
+| [`Microsoft.Extensions.Logging.Debug`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/) | Debugger Monitor |
+| [`Microsoft.Extensions.Logging.EventLog`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/) | Windows Event Log |
+| [`Microsoft.Extensions.Logging.EventSource`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/) | EventSource/EventListener |
+| [`Microsoft.Extensions.Logging.TraceSource`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/) | Trace Listener |
 
-
-
+Microsoft has also collaborated with various logging framework teams (including third parties like NLog, Serilog, Loggr, Log4Net, and others) to extend the list of providers compatible with `Microsoft.Extensions.Logging`. The following are some thrid-party logging providers: 
 
 
 
