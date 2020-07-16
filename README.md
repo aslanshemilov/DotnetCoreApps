@@ -146,13 +146,13 @@ This is a fork of Microsoft.Extensions.CommandLineUtils.
  - NuGet: <https://www.nuget.org/packages/McMaster.Extensions.CommandLineUtils>
 
 ---
-[Fundamentals of Logging in .NET Core](https://www.tutorialsteacher.com/core/fundamentals-of-logging-in-dotnet-core),
+[`Fundamentals of Logging in .NET Core`](https://www.tutorialsteacher.com/core/fundamentals-of-logging-in-dotnet-core),
 
 .NET Core SDK is a light weight SDK which includes a bare minimum set of features required to build an application. We can install NuGet packages for other features we require for our application. For this, Microsoft provides .NET APIs as .NET Extensions.
 
-.NET Extensions is an open-source, cross-platform set of APIs for commonly used programming patterns and utilities, such as dependency injection, logging, and app configuration. Most APIs in this project are meant to work on many .NET platforms, such as .NET Core, .NET Framework, Xamarin, and other. While commonly used in ASP.NET Core applications, these APIs are not coupled to the ASP.NET Core application model. They can be used in console apps, WinForms and WPF, etc. You can find the documentation and the source code of extensions at [https://github.com/aspnet/Extensions.](https://github.com/aspnet/Extensions)
+.NET Extensions is an open-source, cross-platform set of APIs for commonly used programming patterns and utilities, such as dependency injection, logging, and app configuration. Most APIs in this project are meant to work on many .NET platforms, such as .NET Core, .NET Framework, Xamarin, and other. While commonly used in ASP.NET Core applications, these APIs are not coupled to the ASP.NET Core application model. They can be used in console apps, WinForms and WPF, etc. You can find the documentation and the source code of extensions at [`https://github.com/aspnet/Extensions.`](https://github.com/aspnet/Extensions)
 
-All the extensions are included under the Microsoft.Extensions namespace. You can find all built-in and third party extensions at [nuget.org/packages](https://www.nuget.org/packages?q=Microsoft.Extensions)
+All the extensions are included under the Microsoft.Extensions namespace. You can find all built-in and third party extensions at [`nuget.org/packages`](https://www.nuget.org/packages?q=Microsoft.Extensions)
 
  The Logging API is included in the Microsoft.Extensions.Logging package. The Logging API does not work as standalone. It works with one or more logging providers that store or display logs to a particular medium such as Console, Debug, TraceListeners etc.
 
@@ -175,3 +175,36 @@ As mentioned before, Microsoft provides logging API as an extension in the wrapp
 `Microsoft.Extensions.Logging` includes the necessary classes and interfaces for logging. The most important are the ILogger, ILoggerFactory, ILoggerProvider interfaces and the LoggerFactory class.
 
 The following figure shows the relationship between logging classes.
+
+![alt Logging API](https://www.tutorialsteacher.com/Content/images/core/logging-api.png)
+
+<center>Logging API</center>
+
+Let's have an overview of each of the above class. 
+
+
+## ILoggerFactory
+
+The `ILoggerFactory` is the factory interface for creating an appropriate ILogger type instance and also for adding the `ILoggerProvider` instance. 
+
+```C#
+public interface ILoggerFactory : IDisposable
+{
+    ILogger CreateLogger(string categoryName);
+    void AddProvider(ILoggerProvider provider);
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
