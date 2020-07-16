@@ -144,3 +144,6 @@ This is a fork of Microsoft.Extensions.CommandLineUtils.
 
  - GitHub: <https://github.com/natemcmaster/CommandLineUtils>
  - NuGet: <https://www.nuget.org/packages/McMaster.Extensions.CommandLineUtils>
+
+---
+[Fundamentals of Logging in .NET Core](https://www.tutorialsteacher.com/core/fundamentals-of-logging-in-dotnet-core),
