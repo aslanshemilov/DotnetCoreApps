@@ -231,7 +231,7 @@ A logging provider displays or stores logs to a particular medium such as a cons
 
 The following table lists important logging providers. 
 
-| Logging Provider's NuGet Package   |  Output Target  |
+| Logging Provider's NuGet Package | Output Target |
 |---|---|
 | [`Microsoft.Extensions.Logging.Console`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/) | Console |
 | [`Microsoft.Extensions.Logging.AzureAppServices`](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/) | Azure App Services 'Diagnostics logs' and 'Log stream' features |
@@ -242,11 +242,141 @@ The following table lists important logging providers.
 
 Microsoft has also collaborated with various logging framework teams (including third parties like NLog, Serilog, Loggr, Log4Net, and others) to extend the list of providers compatible with `Microsoft.Extensions.Logging`. The following are some thrid-party logging providers: 
 
+| Logging Provider | Description |
+|---|---|
+| [`elmah.io`](elmah.io) | Provider for the Elmah.Io service |
+| [`Loggr`](https://github.com/imobile3/Loggr.Extensions.Logging) | Provider for the Logger service |
+| [`NLog`](https://github.com/NLog/NLog.Extensions.Logging) | Provider for the NLog library |
+| [`Serilog`](https://github.com/serilog/serilog-framework-logging) | Provider for the Serilog library  |
 
 
+Let's take an example using the `Microsoft.Extensions.Logging.Console` package which displays logs on the Console. 
 
+## Console Logging Provider
 
+Let's see how to display logs on the console using the NuGet package for a console provider.
 
+The `Microsoft.Extensions.Logging.Console` package includes logging classes which send log output to the console.
 
- 
+The following figure illustrates how the logging API works with the console logging provider.
+
+![alt Logging API with Console Logging Provider](https://www.tutorialsteacher.com/Content/images/core/console-logger.png)
+
+>>>>>>>>>>>>>>>>>>>>>Logging API with Console Logging Provider
+
+ As you can see in the above figure, the `ConsoleLogger` implements `ILogger`, while the `ConsoleLoggingProvider` implements `ILoggingProvider`. The `ConsoleLoggerExtensions` class includes extension method `AddConsole()`, which adds a console logger to the `LoggerFactory`.
+
+Now, let's see how to display logs on the Console in the .NET Core console application.
+
+First of all, create a new console application using the Console App (.NET Core) template in Visual Studio 2017 (or later).
+
+Now, you need to install a NuGet package of `Microsoft.Extensions.Logging`. You can install it either using the NuGet Package Manager or executing the following command in the Package Manager Console.
+
+```bash
+PM> Install-Package Microsoft.Extensions.Logging
+```
+
+Now, you need to install a logging provider of your choice. Here, we will send logs on the Console, so, install the `Microsoft.Extensions.Logging.Console` package either using NPM or execute the following command in the Package Manager Console in Visual Studio.
+
+```bash
+PM> Install-Package Microsoft.Extensions.Logging.Console
+```
+
+After successfully installing the above two packages, you can now implement logging in your .NET Core console application, as shown below. 
+
+### Example: Logging in .NET Core Console App
+```C#
+namespace DotnetCoreConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ILoggerFactory loggerFactory = new LoggerFactory(
+                            new[] { new ConsoleLoggerProvider((_, __) => true, true) }
+                        );
+            //or
+            //ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
+            
+            ILogger logger = loggerFactory.CreateLogger<Program>();
+            logger.LogInformation("This is log message.");
+        }
+    }
+}
+```
+
+### Output
+```bash
+info: DotnetCoreConsoleApp.Program[0]
+      This is log message. 
+```
+
+In the above example, we created an object of the `LoggerFactory` class and assigned it to the `ILoggerFactory` type variable, as shown below.
+
+```C#
+ILoggerFactory loggerFactory = new LoggerFactory(
+    new[] { new ConsoleLoggerProvider ((_, __) => true, true) }
+);
+```
+
+The `LoggerFactory` can contain one or more logging providers, which can be used to log to multiple mediums concurrently. The constructor of the `LoggerFactory` accepts an array of different logger provider objects as `new[] { }`. We want to display logs on the console, so we need to create an object of the console logger provider `ConsoleLoggerProvider`.
+
+There are four constructors of the `ConsoleLoggerProvider`. Use the one that allows lambda expression (Func<>) for log filtration and includeScope Boolean. Here, we don't want to filter any information so the lambda expression would always return true `(_, __) => true`, as shown below. 
+
+```C#
+new ConsoleLoggerProvider((_, __) => true, true)
+```
+
+Then, we can use this object of the `LoggerFactory` to create a logger using which we can actually log information, errors, warnings, traces, debugs etc. `loggerFactory.CreateLogger<Program>()` creates a logger specific to the `Program` class so that the logger will display a message with context info, e.g. DotnetCoreConsoleApp.Program[0].
+
+Most logging providers include an extension method of `ILoggerFactory`, which is a shortcut to add a provider to the logger factory. For example, to add a console logger provider to the `LoggerFactory`, just call the `LoggerFactory.AddConsole()` extension method with the same parameters as `ConsoleLoggerProvider`, as shown below. 
+
+```C#
+public ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
+```
+
+This is more readable and maintainable than creating a logger provider manually. The above logger factory will display the same output as above.
+
+## Log Levels
+
+Log levels indicate the importance or severity of log messages. Built-in log providers include extension methods to indicate log levels.
+
+The following table lists log levels in .NET Core. 
+
+| Log Level  | Severity | Extension Method | Description |
+|---|---|---|---|
+| Trace | 0 | LogTrace() | Logs messages only for tracing purposes for the developers. |
+| Debug | 1 | LogDebug() | Logs messages for short-term debugging purposes.  |
+| Information | 2 | Logs messages for the flow of the application.  |
+| Warning | 3| LogWarning() | Logs messages for abnormal or unexpected events in the application flow.  |
+| Error | 4 | LogError() |Logs error messages.  |
+| Critical | 5 | LogCritical() | Logs failures messages that require immediate attention.  |
+
+We can use extension methods to indicate the level of the log messages as shown below. 
+
+```C#
+namespace DotnetCoreConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ILoggerFactory loggerFactory = new LoggerFactory().AddConsole((_, __) => true);
+            ILogger logger = loggerFactory.CreateLogger<Program>();
+    
+            logger.LogInformation("Logging information.");
+            logger.LogCritical("Logging critical information.");
+            logger.LogDebug("Logging debug information.");
+            logger.LogError("Logging error information.");
+            logger.LogTrace("Logging trace");
+            logger.LogWarning("Logging warning.");
+        }
+    }
+}
+```
+
+The above example will display the following output:
+
+![alt Logging API with Console Logging Provider](https://www.tutorialsteacher.com/Content/images/core/example-output.png)
+
 
