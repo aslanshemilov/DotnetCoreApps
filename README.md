@@ -146,6 +146,8 @@ This is a fork of Microsoft.Extensions.CommandLineUtils.
  - NuGet: <https://www.nuget.org/packages/McMaster.Extensions.CommandLineUtils>
 
 ---
+https://help.smash.gg/en/articles/1987102-customizing-text-with-markdown
+
 [`Fundamentals of Logging in .NET Core`](https://www.tutorialsteacher.com/core/fundamentals-of-logging-in-dotnet-core),
 
 .NET Core SDK is a light weight SDK which includes a bare minimum set of features required to build an application. We can install NuGet packages for other features we require for our application. For this, Microsoft provides .NET APIs as .NET Extensions.
@@ -158,8 +160,8 @@ All the extensions are included under the Microsoft.Extensions namespace. You ca
 
 So, there are two important building blocks for implementing logging in a .NET Core based application: 
 
-* Logging API 
-* Logging Providers 
+- Logging API 
+- Logging Providers 
 
 The following figure illustrates logging in .NET Core:
 
@@ -178,7 +180,7 @@ The following figure shows the relationship between logging classes.
 
 ![alt Logging API](https://www.tutorialsteacher.com/Content/images/core/logging-api.png)
 
-<center>Logging API</center>
+>>>>>>>>>>>>Logging API
 
 Let's have an overview of each of the above class. 
 
@@ -195,6 +197,39 @@ public interface ILoggerFactory : IDisposable
 }
 ```
 
+The Logging API includes the built-in `LoggerFactory` class that implements the `ILoggerFactory` interface. We can use it to add an instance of type `ILoggerProvider` and to retrieve the `ILogger` instance for the specified category. Visit `ILoggerFactory` and `LoggerFactory` for more information. 
+
+## ILoggerProvider
+
+The `ILoggerProvider` manages and creates an appropriate logger, specified by the logging category. 
+
+```C#
+public interface ILoggerProvider : IDisposable
+{
+    ILogger CreateLogger(string categoryName);
+}
+```
+
+We can create our own logging provider by implementing the `ILoggerProvider` interface. Visit [`ILoggerProvider`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.iloggerprovider) for more information. 
+
+## ILogger
+
+The `ILogger` interface includes methods for logging to the underlying storage. There are many extension methods which make logging easy. Visit [`ILogger`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger) for more information. 
+
+```C#
+public interface ILogger
+{
+    void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter);
+    bool IsEnabled(LogLevel logLevel);
+    IDisposable BeginScope<TState>(TState state);
+} 
+```
+
+## Logging Providers
+
+A logging provider displays or stores logs to a particular medium such as a console, a debugging event, an event log, a trace listener, and others. Microsoft provides various logging providers as NuGet packages.
+
+The following table lists important logging providers. 
 
 
 
