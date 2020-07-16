@@ -158,3 +158,20 @@ All the extensions are included under the Microsoft.Extensions namespace. You ca
 
 So, there are two important building blocks for implementing logging in a .NET Core based application: 
 
+* Logging API 
+* Logging Providers 
+
+The following figure illustrates logging in .NET Core:
+
+![alt text](https://www.tutorialsteacher.com/Content/images/core/logging-dotnet-core.png)
+
+As you can see in the above figure, the logging API in Microsoft.Extensions.Logging works on the .NET Core based applications whether it is ASP.NET Core or EF Core. You just need to use the logging API with one or more logging providers to implement logging in any .NET Core based application.
+
+
+## Logging API 
+
+As mentioned before, Microsoft provides logging API as an extension in the wrapper [`Microsoft.Extensions.Logging`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging) which comes as a NuGet package. 
+
+`Microsoft.Extensions.Logging` includes the necessary classes and interfaces for logging. The most important are the ILogger, ILoggerFactory, ILoggerProvider interfaces and the LoggerFactory class.
+
+The following figure shows the relationship between logging classes.
